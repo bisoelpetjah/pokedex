@@ -1,0 +1,7 @@
+/node_modules
+/build
+/public/dist
+manifest.json
+*.log
+
+.DS_Store

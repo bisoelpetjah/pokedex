@@ -1,0 +1,38 @@
+{
+  "presets": [
+    "env",
+    "react",
+    "stage-0"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "alias": {
+        "app": "./src/app",
+        "assets": "./assets",
+        "client": "./src/client",
+        "server": "./src/server",
+        "config": "./src/config",
+      }
+    }],
+    ["transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true
+    }],
+    "transform-decorators-legacy",
+  ],
+  "env": {
+    "server": {
+      "plugins": [
+        ["css-modules-transform", {
+          "generateScopedName": "[local]-[hash:8]"
+        }],
+        ["transform-assets-import-to-string", {
+          "extensions": [".png", ".svg", ".jpg", ".jpeg"],
+          "baseDir": "/dist/assets",
+          "flatten": true
+        }]
+      ]
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "ext": "js jsx ejs json gql css",
+  "exec": "babel-node"
+}
