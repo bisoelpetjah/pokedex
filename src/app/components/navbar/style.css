@@ -1,0 +1,29 @@
+@import "app/base.css";
+
+.navbar {
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, .25);
+  height: 64px;
+  padding: 12px 16px;
+}
+
+.link {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
+.icon {
+  height: 100%;
+  width: auto;
+}
+
+.text {
+  display: none;
+
+  @media (--medium) {
+    color: var(--color-primary);
+    display: initial;
+    font-size: 28px;
+    margin-left: 24px;
+  }
+}

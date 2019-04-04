@@ -1,0 +1,24 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/5.0.0/sanitize.min.css);
+
+@import "app/base.css";
+
+:global(*) {
+  transition: all .1s ease-out;
+}
+
+:global(body) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+:global(a) {
+  color: var(--color-accent);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.1s ease-out;
+
+  &:hover {
+    opacity: .75;
+  }
+}
