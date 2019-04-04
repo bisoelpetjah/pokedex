@@ -6,12 +6,6 @@
   transition: all .1s ease-out;
 }
 
-:global(body) {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
 :global(a) {
   color: var(--color-accent);
   cursor: pointer;
@@ -21,4 +15,11 @@
   &:hover {
     opacity: .75;
   }
+}
+
+:global(#app) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 100vh;
 }
