@@ -20,6 +20,7 @@
       "regenerator": true
     }],
     "transform-decorators-legacy",
+    "import-graphql"
   ],
   "env": {
     "server": {

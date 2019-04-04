@@ -3,6 +3,10 @@ import proxy from 'http-proxy-middleware'
 import path from 'path'
 import favicon from 'serve-favicon'
 import React from 'react'
+import { ApolloProvider, getDataFromTree } from 'react-apollo'
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import { StaticRouter } from 'react-router'
 import { renderToString } from 'react-dom/server'
 
@@ -12,7 +16,6 @@ import appConfig from 'config/app'
 import apiConfig from 'config/api'
 
 import App from 'app'
-import { ConfigProvider } from 'app/utils/config'
 
 const app = express()
 
@@ -35,34 +38,49 @@ if (appConfig.environment === 'development') {
 app.use(favicon(path.resolve(__dirname, 'favicon.ico')))
 
 app.use((req, res, next) => {
+  const apolloClient = new ApolloClient({
+    ssrMode: true,
+    link: createHttpLink({ uri: apiConfig.endpoint }),
+    cache: new InMemoryCache(),
+  })
+
   const routerContext = {}
 
   const config = { api: apiConfig }
 
   const component = (
-    <StaticRouter location={req.url} context={routerContext}>
-      <ConfigProvider config={config}>
+    <ApolloProvider client={apolloClient}>
+      <StaticRouter location={req.url} context={routerContext}>
         <App />
-      </ConfigProvider>
-    </StaticRouter>
+      </StaticRouter>
+    </ApolloProvider>
   )
 
   if (routerContext.url) return res.redirect(routerContext.url)
 
-  const initialState = { config }
+  const renderComponent = () => {
+    const initialState = {
+      config,
+      apollo: apolloClient.cache.extract(),
+    }
 
-  const componentString = renderToString(component)
+    const componentString = renderToString(component)
 
-  res.data = {
-    metadata: {
-      title: 'Pokedex',
-      description: 'Pokedex',
-    },
-    initialState: JSON.stringify(initialState),
-    content: componentString,
+    res.data = {
+      metadata: {
+        title: 'Pokedex',
+        description: 'Pokedex',
+      },
+      initialState: JSON.stringify(initialState),
+      content: componentString,
+    }
+
+    return next()
   }
 
-  return next()
+  getDataFromTree(component)
+    .then(renderComponent)
+    .catch(renderComponent)
 })
 
 app.use((req, res, next) => {
