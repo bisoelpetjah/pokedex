@@ -1,0 +1,55 @@
+@import "app/base.css";
+
+.loadingContainer {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.pokemonListContainer {
+  padding: 0 24px;
+
+  @media (--medium) {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    max-width: 1044px;
+    padding: 0;
+  }
+}
+
+.pokemonContainer {
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, .25);
+  display: flex;
+  flex-direction: column;
+  margin: 24px 0;
+
+  @media (--medium) {
+    margin: 24px;
+    width: 300px;
+  }
+}
+
+.pokemonImage {
+  height: auto;
+  margin: 36px 0;
+  object-fit: contain;
+  width: 60%;
+
+  @media (--medium) {
+    flex: 1;
+    margin: 48px 0;
+    width: 80%;
+  }
+}
+
+.pokemonName {
+  background-color: var(--color-accent);
+  color: var(--white);
+  font-size: 20px;
+  padding: 16px 24px;
+  width: 100%;
+}
