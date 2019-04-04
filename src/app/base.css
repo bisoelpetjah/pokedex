@@ -1,6 +1,8 @@
 :root {
   --color-primary: #e64c3c;
   --color-accent: #040404;
+
+  --white: #ffffff;
 }
 
 @custom-media --xxsmall (width <= 320px);
