@@ -28,7 +28,7 @@ export default class NotFound extends Component {
                 {data.pokemons.map(({ id, name, image }) => (
                   <Link
                     key={id}
-                    to={`/${id}`}
+                    to={`/${name.toLowerCase()}`}
                     className={styles.pokemonContainer}>
                     <img src={image} className={styles.pokemonImage} />
                     <div className={styles.pokemonName}>{name}</div>
