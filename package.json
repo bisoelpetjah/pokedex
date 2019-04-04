@@ -6,7 +6,7 @@
   "scripts": {
     "develop:server": "BABEL_ENV=server nodemon .",
     "develop:client": "webpack-dev-server --progress --color --config ./webpack.config.dev.js",
-    "develop": "PORT=3000 yarn develop:client & PORT=3000 yarn develop:server",
+    "develop": "PORT=3000 yarn develop:client & PORT=3000 API_ENDPOINT=https://graphql-pokemon.now.sh yarn develop:server",
     "build:server": "BABEL_ENV=server babel --out-dir build src --copy-files",
     "build:client": "webpack --progress --config ./webpack.config.prod.js",
     "build": "yarn build:server && NODE_ENV=production yarn build:client",

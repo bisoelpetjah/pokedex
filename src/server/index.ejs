@@ -19,6 +19,10 @@
     <% if (assets['app.css']) { %>
       <link rel="stylesheet" href="/dist/<%= assets['app.css'] %>">
     <% } %>
+
+    <script type="text/javascript">
+      window.__INITIAL_STATE__ = <%- initialState %>
+    </script>
   </head>
   <body>
     <div id="app"><%- content %></div>

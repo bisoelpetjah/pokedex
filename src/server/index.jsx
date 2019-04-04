@@ -9,8 +9,10 @@ import { renderToString } from 'react-dom/server'
 import manifest from '../../manifest.json'
 
 import appConfig from 'config/app'
+import apiConfig from 'config/api'
 
 import App from 'app'
+import { ConfigProvider } from 'app/utils/config'
 
 const app = express()
 
@@ -35,13 +37,19 @@ app.use(favicon(path.resolve(__dirname, 'favicon.ico')))
 app.use((req, res, next) => {
   const routerContext = {}
 
+  const config = { api: apiConfig }
+
   const component = (
     <StaticRouter location={req.url} context={routerContext}>
-      <App />
+      <ConfigProvider config={config}>
+        <App />
+      </ConfigProvider>
     </StaticRouter>
   )
 
   if (routerContext.url) return res.redirect(routerContext.url)
+
+  const initialState = { config }
 
   const componentString = renderToString(component)
 
@@ -50,6 +58,7 @@ app.use((req, res, next) => {
       title: 'Pokedex',
       description: 'Pokedex',
     },
+    initialState: JSON.stringify(initialState),
     content: componentString,
   }
 
