@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import Page from 'app/components/page'
 import Loading from 'app/components/loading'
+import NotFound from 'app/404'
 
 import DetailSection from './section'
 
@@ -33,7 +34,11 @@ export default class Detail extends Component {
 
           const { pokemon } = data
 
-          if (!pokemon) return
+          if (!pokemon) {
+            return (
+              <NotFound />
+            )
+          }
 
           return (
             <Page>
