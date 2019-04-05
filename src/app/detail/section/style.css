@@ -1,0 +1,27 @@
+@import "app/base.css";
+
+.container {
+  border: 1px solid rgba(0, 0, 0, .25);
+}
+
+.title {
+  background-color: var(--color-accent);
+  color: var(--white);
+  font-size: 14px;
+  padding: 8px 16px;
+
+  @media (--medium) {
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+}
+
+.content {
+  font-size: 16px;
+  padding: 12px 16px;
+
+  @media (--medium) {
+    font-size: 18px;
+    padding: 12px 24px;
+  }
+}

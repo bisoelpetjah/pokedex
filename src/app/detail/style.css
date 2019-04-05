@@ -6,33 +6,42 @@
   justify-content: center;
 }
 
-.pokemonName {
+.name {
   background-color: var(--color-accent);
   border-bottom-right-radius: 24px;
   color: var(--white);
   font-size: 20px;
   padding: 8px 28px 12px 24px;
   position: absolute;
+
+  @media (--medium) {
+    font-size: 28px;
+  }
 }
 
-.pokemonCardContainer {
+.cardContainer {
   @media (--medium) {
     display: flex;
   }
 }
 
-.pokemonImageContainer {
-  border: 1px solid rgba(0, 0, 0, .25);
-  border-radius: 10px;
+.overviewContainer {
   margin: 16px 24px;
-  padding: 24px;
 
   @media (--medium) {
     flex: 1;
+    height: 100%;
+    margin: 24px 28px;
   }
 }
 
-.pokemonImage {
+.imageContainer {
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.image {
   border-radius: 10px;
   height: auto;
   object-fit: contain;
@@ -43,10 +52,69 @@
   }
 }
 
-.pokemonDetailContainer {
+.evolutionSection {
+  margin-top: 16px;
+
+  @media (--medium) {
+    margin-top: 24px;
+  }
+}
+
+.evolutionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.evolutionLink {
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.evolutionImage {
+  flex: 1;
+  height: auto;
+  object-fit: contain;
+  padding: 8px;
+  width: 80px;
+
+  @media (--medium) {
+    width: 100px;
+  }
+}
+
+.evolutionName {
+  background-color: var(--color-accent);
+  color: var(--white);
+  padding: 4px 8px;
+  width: 100%;
+
+  @media (--medium) {
+    padding: 8px 12px;
+  }
+}
+
+.detailContainer {
   padding: 24px;
 
   @media (--medium) {
     flex: 1;
+    padding: 24px 28px;
   }
+}
+
+.detailSection {
+  margin-bottom: 16px;
+
+  @media (--medium) {
+    margin-bottom: 18px;
+  }
+}
+
+.detailList {
+  margin: 0;
+  padding: 0 20px;
 }
