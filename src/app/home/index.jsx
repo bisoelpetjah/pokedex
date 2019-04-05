@@ -20,6 +20,17 @@ class HomeWithQuery extends Component {
     onFetchNewPage: PropTypes.func.isRequired,
   }
 
+  componentDidMount() {
+    const { loading, data, onFetchNewPage } = this.props
+    if (!loading && (!data || !data.length)) onFetchNewPage()
+  }
+
+  componentDidUpdate() {
+    const { loading, data, onFetchNewPage } = this.props
+
+    if (!loading && (!data || !data.length)) onFetchNewPage()
+  }
+
   handleScrollEnd = () => {
     const { loading, onFetchNewPage } = this.props
     if (!loading) onFetchNewPage()
@@ -69,7 +80,7 @@ class HomeWithQuery extends Component {
 const Home = props => {
   const [currentPage, setCurrentPage] = useState(15)
 
-  const handleFetchNewPage = () => { setCurrentPage(currentPage + 15) }
+  const handleFetchNewPage = () => { if (currentPage < 150) setCurrentPage(currentPage + 15) }
 
   return (
     <Query query={pokemonsQuery} variables={{ first: currentPage }}>
