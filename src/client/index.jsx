@@ -20,6 +20,26 @@ const apolloClient = new ApolloClient({
 
 const history = createBrowserHistory()
 
+const historyScrollStack = [{
+  url: `${history.location.pathname}${history.location.search}`,
+  scrollPosition: 0,
+}]
+
+history.listen(({ pathname, search }) => {
+  const fullUrl = `${pathname}${search}`
+
+  const isForward = (historyScrollStack.length < 2) || (historyScrollStack[historyScrollStack.length - 2].url !== fullUrl)
+  if (isForward) {
+    historyScrollStack.push({
+      url: fullUrl,
+      scrollPosition: window.scrollY,
+    })
+    window.requestAnimationFrame(() => { window.scrollTo(0, 0) })
+  } else {
+    window.requestAnimationFrame(() => { window.scrollTo(0, historyScrollStack.pop().scrollPosition) })
+  }
+})
+
 hydrate((
   <ApolloProvider client={apolloClient}>
     <Router history={history}>
