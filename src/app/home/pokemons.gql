@@ -1,5 +1,5 @@
-query pokemons {
-  pokemons(first: 10) {
+query pokemons($first: Int!) {
+  pokemons(first: $first) {
     id
     name
     image
