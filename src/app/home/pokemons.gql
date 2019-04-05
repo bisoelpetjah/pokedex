@@ -3,5 +3,6 @@ query pokemons($first: Int!) {
     id
     name
     image
+    types
   }
 }

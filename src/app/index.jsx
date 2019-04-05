@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { Switch, Route, withRouter } from 'react-router-dom'
 
 import Navbar from 'app/components/navbar'
 
@@ -9,11 +10,17 @@ import NotFound from './404'
 
 import './style.css'
 
-export default class App extends Component {
+export default
+@withRouter
+class App extends Component {
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+  }
+
   render() {
     return (
       <Fragment>
-        <Navbar />
+        <Navbar shouldShowFilter={this.props.location.pathname === '/'} />
         <Switch>
           <Route
             path="/"

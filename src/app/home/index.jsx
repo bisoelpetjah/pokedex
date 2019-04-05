@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import { Link } from 'react-router-dom'
+import { parse } from 'query-string'
 
 import Page from 'app/components/page'
 import Loading from 'app/components/loading'
@@ -13,6 +14,7 @@ import styles from './style.css'
 
 class HomeWithQuery extends Component {
   static propTypes = {
+    location: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     data: PropTypes.object,
     onFetchNewPage: PropTypes.func.isRequired,
@@ -24,7 +26,7 @@ class HomeWithQuery extends Component {
   }
 
   render() {
-    const { loading, data } = this.props
+    const { location: { search }, loading, data } = this.props
 
     if ((!data || !data.pokemons || !data.pokemons.length) && loading) {
       return (
@@ -34,11 +36,18 @@ class HomeWithQuery extends Component {
       )
     }
 
+    let pokemons = data.pokemons
+
+    const { filter } = parse(search)
+    if (filter) {
+      pokemons = pokemons.filter(({ types }) => (types.includes(filter)))
+    }
+
     return (
       <Page className={styles.page}>
         <InfiniteScroll onScrollEnd={this.handleScrollEnd}>
           <div className={styles.pokemonListContainer}>
-            {data.pokemons.map(({ id, name, image }) => (
+            {pokemons.map(({ id, name, image }) => (
               <Link
                 key={id}
                 to={`/${name.toLowerCase()}`}
@@ -57,15 +66,16 @@ class HomeWithQuery extends Component {
   }
 }
 
-const Home = () => {
+const Home = props => {
   const [currentPage, setCurrentPage] = useState(15)
 
-  const handleFetchNewPage = () => { setCurrentPage(currentPage + 9) }
+  const handleFetchNewPage = () => { setCurrentPage(currentPage + 15) }
 
   return (
     <Query query={pokemonsQuery} variables={{ first: currentPage }}>
       {({ loading, data }) => (
         <HomeWithQuery
+          {...props}
           loading={loading}
           data={data}
           onFetchNewPage={handleFetchNewPage} />

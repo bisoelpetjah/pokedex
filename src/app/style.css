@@ -6,6 +6,10 @@
   transition: all .1s ease-out;
 }
 
+:global(button) {
+  cursor: pointer;
+}
+
 :global(a) {
   color: var(--color-accent);
   cursor: pointer;

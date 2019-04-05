@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'debounce'
 
@@ -27,10 +27,6 @@ export default class InfiniteScroll extends Component {
   }, 100)
 
   render() {
-    return (
-      <Fragment>
-        {this.props.children}
-      </Fragment>
-    )
+    return this.props.children
   }
 }
