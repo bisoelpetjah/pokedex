@@ -27,13 +27,13 @@ class HomeWithQuery extends Component {
 
   componentDidMount() {
     const { loading, data, onFetchNewPage } = this.props
-    if (!loading && (!data || !data.length)) onFetchNewPage()
+    if (!loading && (!data || !data.pokemons.length)) onFetchNewPage()
   }
 
   componentDidUpdate() {
     const { loading, data, onFetchNewPage } = this.props
 
-    if (!loading && (!data || !data.length)) onFetchNewPage()
+    if (!loading && (!data || !data.pokemons.length)) onFetchNewPage()
   }
 
   handleScrollEnd = () => {
