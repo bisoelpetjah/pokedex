@@ -8,6 +8,7 @@ import { Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 
 import App from 'app'
+import { MetaProvider } from 'app/utils/meta'
 
 const initialState = window.__INITIAL_STATE__
 
@@ -40,10 +41,16 @@ history.listen(({ pathname, search }) => {
   }
 })
 
+const setPageMeta = meta => {
+  document.title = (meta && meta.title) ? `${meta.title} | Pokédex` : 'Pokédex'
+}
+
 hydrate((
   <ApolloProvider client={apolloClient}>
     <Router history={history}>
-      <App />
+      <MetaProvider onPageMetaChange={setPageMeta}>
+        <App />
+      </MetaProvider>
     </Router>
   </ApolloProvider>
 ), document.getElementById('app'))

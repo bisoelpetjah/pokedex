@@ -6,12 +6,17 @@ import { parse } from 'query-string'
 
 import Page from 'app/components/page'
 import Loading from 'app/components/loading'
+import meta from 'app/utils/meta'
 import InfiniteScroll from 'app/utils/infiniteScroll'
 
 import pokemonsQuery from './pokemons.gql'
 
 import styles from './style.css'
 
+@meta(() => ({
+  title: 'Home',
+  description: 'Pokédex',
+}))
 class HomeWithQuery extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,

@@ -16,6 +16,7 @@ import appConfig from 'config/app'
 import apiConfig from 'config/api'
 
 import App from 'app'
+import { MetaProvider } from 'app/utils/meta'
 
 const app = express()
 
@@ -45,13 +46,16 @@ app.use((req, res, next) => {
   })
 
   const routerContext = {}
+  const metaContext = {}
 
   const config = { api: apiConfig }
 
   const component = (
     <ApolloProvider client={apolloClient}>
       <StaticRouter location={req.url} context={routerContext}>
-        <App />
+        <MetaProvider context={metaContext}>
+          <App />
+        </MetaProvider>
       </StaticRouter>
     </ApolloProvider>
   )
@@ -66,10 +70,16 @@ app.use((req, res, next) => {
 
     const componentString = renderToString(component)
 
+    const url = (routerContext.url || req.url).split('?')[0]
+    const meta = metaContext.pageMeta[url]
+
     res.data = {
-      metadata: {
-        title: 'Pokedex',
-        description: 'Pokedex',
+      metadata: (meta && meta.title) ? {
+        ...meta,
+        title: `${meta.title} | Pokédex`,
+      } : {
+        title: 'Pokédex',
+        description: 'Pokédex',
       },
       initialState: JSON.stringify(initialState),
       content: componentString,
