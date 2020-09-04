@@ -74,7 +74,7 @@
     "stylelint-order": "^0.8.1",
     "webpack": "^3.12.0",
     "webpack-assets-manifest": "^1.0.0",
-    "webpack-dev-server": "^2.9.5",
+    "webpack-dev-server": "^3.1.11",
     "webpack-split-by-path": "^2.0.0"
   },
   "repository": "https://github.com/bisoelpetjah/pokedex",
