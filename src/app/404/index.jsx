@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
 
 import Page from 'app/components/page'
-import meta from 'app/utils/meta'
 
 import pikachu from './sad-pikachu.png'
 
 import styles from './style.css'
 
 export default
-@meta(() => ({
-  title: 'Not found',
-  description: 'Pokédex',
-}))
 class NotFound extends Component {
   render() {
     return (
