@@ -26,7 +26,10 @@ class App extends Component {
             path="/"
             exact
             component={Home} />
-          <Route path="/:id" component={Detail} />
+          <Route
+            path="/:id"
+            exact
+            component={Detail} />
           <Route component={NotFound} />
         </Switch>
       </Fragment>
