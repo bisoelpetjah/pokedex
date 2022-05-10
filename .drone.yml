@@ -1,0 +1,57 @@
+kind: pipeline
+type: kubernetes
+name: default
+trigger:
+  branch:
+  - master
+steps:
+- name: build-source-code
+  image: node:18
+  commands:
+  - yarn
+  - yarn build
+  - yarn install --production
+- name: assemble-docker-image
+  image: docker:dind
+  environment:
+    IMAGE_NAME: k3scr.sokcoba.in/pokedex/pokedex-www
+  volumes:
+  - name: dockersock
+    path: /var/run
+  commands:
+  - sleep 5
+  - docker build -t $${IMAGE_NAME}:$${DRONE_COMMIT} .
+  - docker tag $${IMAGE_NAME}:$${DRONE_COMMIT} $${IMAGE_NAME}:latest
+  - docker push -a $${IMAGE_NAME}
+- name: checkout-deployment
+  image: alpine/git
+  environment:
+    DEPLOYMENT_REPO_URL: https://github.com/bisoelpetjah/adhityaco-deployment.git
+  commands:
+  - git clone $${DEPLOYMENT_REPO_URL} deployment
+- name: deploy-to-kubernetes
+  image: sinlead/drone-kubectl
+  environment:
+    NAMESPACE: default
+    DEPLOYMENT_NAME: pokedex-www
+  settings:
+    kubernetes_server:
+      from_secret: k8s_server
+    kubernetes_cert:
+      from_secret: k8s_cert
+    kubernetes_token:
+      from_secret: k8s_token
+  commands:
+  - kubectl apply -n $${NAMESPACE} -f ./deployment/$${NAMESPACE}/deployments/$${DEPLOYMENT_NAME}.yaml
+  - kubectl patch deployment -n $${NAMESPACE} $${DEPLOYMENT_NAME} -p '{"spec":{"template":{"metadata":{"labels":{"deploymentTime":"'$(date +%s)'"}}}}}'
+  - kubectl rollout status deployment -n $${NAMESPACE} $${DEPLOYMENT_NAME}
+services:
+- name: docker
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+volumes:
+- name: dockersock
+  temp: {}
