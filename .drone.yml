@@ -42,7 +42,7 @@ steps:
     kubernetes_token:
       from_secret: k8s_token
   commands:
-  - kubectl apply -n $${NAMESPACE} -f ./deployment/$${NAMESPACE}/deployments/$${DEPLOYMENT_NAME}.yaml
+  - kubectl apply -n $${NAMESPACE} -f ./deployment/$${NAMESPACE}/$${DEPLOYMENT_NAME}.yaml
   - kubectl patch deployment -n $${NAMESPACE} $${DEPLOYMENT_NAME} -p '{"spec":{"template":{"metadata":{"labels":{"deploymentTime":"'$(date +%s)'"}}}}}'
   - kubectl rollout status deployment -n $${NAMESPACE} $${DEPLOYMENT_NAME}
 services:
